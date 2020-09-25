@@ -1,10 +1,32 @@
+.accordionWrapper {
+  border: 1px solid grey;
+  border-radius: 3px;
+}
+
+.heading {
+  margin: 0;
+}
+
 .accordionBtn {
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
   background: none;
-  border: 1px solid red;
+  border: 1px solid grey;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(128, 128, 128, 0.3 );
+}  
+
+.accordionBtn:focus {
+  background: lightblue;
 }
 
 .accordionPanel {
-  border: 1px solid blue;
+  padding: 1rem 2rem;
+  background: rgba(173, 216, 230, 0.3);
 }
 
 .hidden {

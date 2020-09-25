@@ -16,5 +16,6 @@ AccordionSimple.args = {
     {heading: "Another heading", content: exampleContent, id: "2"},
     {heading: "The heading", content: exampleContent, id: "3"},
     {heading: "Another heading", content: exampleContent, id: "4"}
-  ]
+  ],
+  headingLevel: 3
 };

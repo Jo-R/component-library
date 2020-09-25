@@ -3,30 +3,35 @@ import PropTypes from 'prop-types';
 import { FaChevronDown } from "react-icons/fa"
 import styles from "./Accordion.module.css";
 
-export const AccordionSection = ({ item, index, isActive, handleHeaderClick, sectionRef, ...props }) => {
+export const AccordionSection = ({ item, index, isActive, handleHeaderClick, sectionRef, headingLevel, ...props }) => {
+  const HeadingTag = `h${headingLevel}`;
   return (
-    <div>
-      <button
-        type="button"
-        aria-expanded={!isActive ? "false" : "true"}
-        aria-controls={`section${index}`}
-        id={`${item.id}`}
-        className={styles.accordionBtn}
-        onClick={(e) => handleHeaderClick(e)}
-        data-index={index}
-        ref={sectionRef}
-        {...props}
-      >
-        <span>{item.heading}</span>
-        <span><FaChevronDown className={!isActive ? `${styles.icon} ${styles.unrotatedIcon}` : `${styles.icon} ${styles.rotatedIcon}`} /></span>
-      </button>
+    <>
+      <HeadingTag className={styles.heading}>
+        <button
+          type="button"
+          aria-expanded={!isActive ? "false" : "true"}
+          aria-controls={`section${index}`}
+          id={`${item.id}`}
+          className={styles.accordionBtn}
+          onClick={(e) => handleHeaderClick(e)}
+          data-index={index}
+          ref={sectionRef}
+          {...props}
+        >
+          <p>{item.heading}</p>
+          <span><FaChevronDown className={!isActive ? `${styles.icon} ${styles.unrotatedIcon}` : `${styles.icon} ${styles.rotatedIcon}`} /></span>
+        </button>
+      </HeadingTag>
       <div
         id={`section${index}`}
         role="region"
         aria-labelledby={`${item.id}`}
         className={!isActive ? `${styles.accordionPanel} ${styles.hidden}` : styles.accordionPanel}
-      >{item.content}</div>
-    </div>
+      >
+        {item.content}
+      </div>
+    </>
   );
 };
 
@@ -39,5 +44,6 @@ AccordionSection.propTypes = {
   index: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   handleHeaderClick: PropTypes.func.isRequired,
-  sectionRef: PropTypes.any.isRequired
+  sectionRef: PropTypes.any.isRequired,
+  headingLevel: PropTypes.number.isRequired
 }

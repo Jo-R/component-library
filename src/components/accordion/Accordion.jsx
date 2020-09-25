@@ -1,8 +1,14 @@
 import React, { createRef, useRef, useState } from "react";
 import PropTypes from 'prop-types';
+import styles from "./Accordion.module.css";
 import { AccordionSection } from "./AccordionSection";
 
-export const Accordion = ({ items, allowMultipleOpen }) => {
+// TODO
+// - allowmultiplopen
+// - add a default open option
+// - animate showing/hiding of content (height with all the fun that entails)
+// - styling in general
+export const Accordion = ({ items, headingLevel, allowMultipleOpen }) => {
   const [activePanel, setActivePanel] = useState();
   const sectionsRefs = useRef(items.map(() => createRef()));
 
@@ -48,7 +54,7 @@ export const Accordion = ({ items, allowMultipleOpen }) => {
   }
 
   return (
-    <div>
+    <div className={styles.accordionWrapper}>
       {
         items.map((el, index) => <AccordionSection 
           item={el} 
@@ -58,6 +64,7 @@ export const Accordion = ({ items, allowMultipleOpen }) => {
           handleHeaderClick={handleHeaderClick}
           onKeyDown={handleKeypress}
           sectionRef={sectionsRefs.current[index]}
+          headingLevel={headingLevel}
         />)
       }
 
@@ -69,6 +76,7 @@ export const Accordion = ({ items, allowMultipleOpen }) => {
 Accordion.propTypes = {
   items: PropTypes.arrayOf(AccordionSection.propTypes.item).isRequired,
   allowMultipleOpen: PropTypes.bool,
+  headingLevel: PropTypes.number
 };
 
 Accordion.defaultProps = {
