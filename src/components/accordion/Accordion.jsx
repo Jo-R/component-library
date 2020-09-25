@@ -1,43 +1,76 @@
-import React, {useState} from "react";
+import React, { createRef, useRef, useState } from "react";
 import PropTypes from 'prop-types';
-import { FaChevronDown } from "react-icons/fa"
-import styles from "./Accordion.module.css";
+import { AccordionSection } from "./AccordionSection";
 
-export const Accordion = ({ items }) => {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+export const Accordion = ({ items, allowMultipleOpen }) => {
+  const [activePanel, setActivePanel] = useState();
+  const sectionsRefs = useRef(items.map(() => createRef()));
 
-  const togglePanel = () => {
-    setIsCollapsed(!isCollapsed);
+  const handleHeaderClick = (e) => {
+    const targetPanel = e.currentTarget.id;
+    if (targetPanel === activePanel) {
+      setActivePanel(null);
+      return;
+    }
+    setActivePanel(e.currentTarget.id);
+  }
+
+  const handleKeypress = (e) => {
+    const targetIndex = parseInt(e.currentTarget.dataset.index);
+    switch(e.key) {
+      case "ArrowDown": 
+        e.preventDefault();
+        if (targetIndex === items.length -1) {
+          sectionsRefs.current[0].current.focus();
+        } else {
+          sectionsRefs.current[targetIndex + 1].current.focus();
+        }
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        if (targetIndex === 0) {
+          sectionsRefs.current[items.length - 1].current.focus();
+        } else {
+          sectionsRefs.current[targetIndex - 1].current.focus();
+        }
+        break;
+      case "Home":
+        e.preventDefault();
+        sectionsRefs.current[0].current.focus();
+        break;
+      case "End":
+        e.preventDefault();
+        sectionsRefs.current[items.length - 1].current.focus();
+        break;
+      default:
+        break;
+    }
   }
 
   return (
     <div>
-      <button
-        type="button"
-        aria-expanded="true"
-        aria-controls="section1"
-        id="accordion1id"
-        className={styles.accordionBtn}
-        onClick={togglePanel}
-      >
-        <span>{items[0].heading}</span>
-        <span><FaChevronDown /></span>
-      </button>
-      <div
-        id="section1"
-        role="region"
-        aria-labelledby="accordion1id"
-        className={isCollapsed ? `${styles.accordionPanel} ${styles.hidden}` : styles.accordionPanel}
-      >{items[0].content}</div>
+      {
+        items.map((el, index) => <AccordionSection 
+          item={el} 
+          key={index} 
+          index={index}
+          isActive={activePanel === el.id}
+          handleHeaderClick={handleHeaderClick}
+          onKeyDown={handleKeypress}
+          sectionRef={sectionsRefs.current[index]}
+        />)
+      }
+
     </div>
+
   );
-}
+};
 
 Accordion.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      heading: PropTypes.string,
-      content: PropTypes.node
-    })
-  ).isRequired
-}
+  items: PropTypes.arrayOf(AccordionSection.propTypes.item).isRequired,
+  allowMultipleOpen: PropTypes.bool,
+};
+
+Accordion.defaultProps = {
+  allowMultipleOpen: false,
+};
