@@ -1,0 +1,12 @@
+.accordionBtn {
+  background: none;
+  border: 1px solid red;
+}
+
+.accordionPanel {
+  border: 1px solid blue;
+}
+
+.hidden {
+  display: none;
+}
