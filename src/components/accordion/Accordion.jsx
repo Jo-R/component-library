@@ -7,7 +7,7 @@ import { AccordionSection } from "./AccordionSection";
 // - allowmultiplopen
 // - add a default open option
 // - animate showing/hiding of content (height with all the fun that entails)
-// - styling in general
+// - testing https://storybook.js.org/docs/react/workflows/testing-with-storybook and ?more stories
 export const Accordion = ({ items, headingLevel, allowMultipleOpen }) => {
   const [activePanel, setActivePanel] = useState();
   const sectionsRefs = useRef(items.map(() => createRef()));
