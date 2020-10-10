@@ -1,0 +1,1 @@
+This version of the accordion is a simplified versio of the reach UI accordion to learn about using context to manage the parent child relationships in components like these.
