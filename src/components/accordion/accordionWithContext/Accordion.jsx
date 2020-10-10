@@ -1,22 +1,24 @@
 import React from "react";
+import { useContext } from "react";
+import { useRef, useState } from "react";
 import styles from "../Accordion.module.css";
-import { DescendantProvider } from "./AccordionContext";
-import AccordionDescendantContext from "./AccordionContext";
+import {AccordionDescendantProvider, AccordionDescendantContext} from "./AccordionContext";
 
 export const Accordion = ({ children }) => {
+  const [descendants, setDescendants] = useState([]);
+  console.log(descendants);
   return (
-    <DescendantProvider
-      context={AccordionDescendantContext}
-      items={descendants}
-      set={setDescendants}
-    >
+    <AccordionDescendantProvider items={descendants} set={setDescendants}>
       <div>{children}</div>
-    </DescendantProvider>
+    </AccordionDescendantProvider>
   );
 };
 
 export const AccordionItem = ({ children }) => {
-  return <div>{children}</div>;
+  const testRef = useRef(null);
+  const { registerDescendant } = useContext(AccordionDescendantContext);
+  registerDescendant(testRef.current);
+  return <div ref={testRef}>{children}</div>;
 };
 
 export const AccordionButton = ({ children, ...props }) => {
