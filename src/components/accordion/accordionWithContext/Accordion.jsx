@@ -2,11 +2,10 @@ import React from "react";
 import { useContext } from "react";
 import { useRef, useState } from "react";
 import styles from "../Accordion.module.css";
-import {AccordionDescendantProvider, AccordionDescendantContext} from "./AccordionContext";
+import {AccordionDescendantProvider, AccordionItemContext, useDescendent} from "./AccordionContext";
 
 export const Accordion = ({ children }) => {
   const [descendants, setDescendants] = useState([]);
-  console.log(descendants);
   return (
     <AccordionDescendantProvider items={descendants} set={setDescendants}>
       <div>{children}</div>
@@ -16,12 +15,22 @@ export const Accordion = ({ children }) => {
 
 export const AccordionItem = ({ children }) => {
   const testRef = useRef(null);
-  const { registerDescendant } = useContext(AccordionDescendantContext);
-  registerDescendant(testRef.current);
-  return <div ref={testRef}>{children}</div>;
+  const index = useDescendent(testRef.current);
+  
+  const itemCtxValues = {
+    testRef,
+    index
+  };
+  return (
+    <AccordionItemContext.Provider value={itemCtxValues}>
+      <div>{children}</div>
+    </AccordionItemContext.Provider>
+  
+  );
 };
 
 export const AccordionButton = ({ children, ...props }) => {
+  const {testRef} = useContext(AccordionItemContext);
   return (
     <button
       type="button"
@@ -30,6 +39,7 @@ export const AccordionButton = ({ children, ...props }) => {
       id={"ID"}
       className={styles.accordionBtn}
       onClick={() => console.log("click")}
+      ref={testRef}
       {...props}
     >
       {children}
