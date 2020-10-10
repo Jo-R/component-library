@@ -13,15 +13,16 @@ export function useForceUpdate() {
 }
 
 export const useDescendent = (element) => {
-  const { registerDescendant, descendants } = useContext(AccordionDescendantContext);
+  const { registerDescendant, descendants, unregisterDescendant } = useContext(AccordionDescendantContext);
   const forceUpdate = useForceUpdate();
   let index =  descendants.findIndex((item) => item.element === element);
   
   useEffect(() => {
-    console.log(element);
     if (!element) forceUpdate();
     registerDescendant(element);
-  }, [element, registerDescendant, index, forceUpdate]);
+
+    return () => unregisterDescendant(element);
+  }, [element, registerDescendant, index, forceUpdate, unregisterDescendant]);
   
   return index;
 }
@@ -30,19 +31,29 @@ export const AccordionDescendantContext = createContext();
 export const AccordionItemContext = createContext();
 
 export const AccordionDescendantProvider = ({items, set, children}) => {
+
   const registerDescendant = useCallback((element) => {
-    // TODO  infinite loop of doom 
-    if (!element || items.find((item) => item === element)) {
+    if (!element) {
         return;
     }
-    // keep this simple, Reach does a lot more than this but this is just for demo so
-    const updated = [...items, element];
-    set(updated.map((item, index) => ({ ...item, index })));
-  }, [items, set]);
+    // TODO improve more per the Reach on to get the order right always
+    // using this way of using items avoids it being a dep and the infinite loop
+    set((items) => {
+      let updated;
+      if (items.find((item) => item === element)) {
+        updated = items;
+      } else {
+        updated = [...items, element];
+      }
+      return updated.map((item, index) => ({ ...item, index }));
+    });
+  }, [set]);
   
   const unregisterDescendant = useCallback((element) => {
-    const updated = (descendents) => descendents.filter((item) => element !== item.element);
-    set(updated.map((item, index) => ({ ...item, index })))
+    set((items) => {
+       const updated = items.filter((item) => element !== item.element);
+       return updated.map((item, index) => ({ ...item, index }));
+    });
   }, [set]);
 
   return(
