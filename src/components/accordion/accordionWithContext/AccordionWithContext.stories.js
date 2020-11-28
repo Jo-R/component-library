@@ -37,6 +37,26 @@ AccordionWithContext.args = {
           congue gravida malesuada proin scelerisque luctus est convallis.
         </AccordionPanel>
       </AccordionItem>
+       <AccordionItem>
+        <h3>
+          <AccordionButton>and me</AccordionButton>
+        </h3>
+        <AccordionPanel>
+          Ante rhoncus facilisis iaculis nostra faucibus vehicula ac consectetur
+          pretium, lacus nunc consequat id viverra facilisi ligula eleifend,
+          congue gravida malesuada proin scelerisque luctus est convallis.
+        </AccordionPanel>
+      </AccordionItem>
+       <AccordionItem>
+        <h3>
+          <AccordionButton>and me</AccordionButton>
+        </h3>
+        <AccordionPanel>
+          Ante rhoncus facilisis iaculis nostra faucibus vehicula ac consectetur
+          pretium, lacus nunc consequat id viverra facilisi ligula eleifend,
+          congue gravida malesuada proin scelerisque luctus est convallis.
+        </AccordionPanel>
+      </AccordionItem>
     </Accordion>
   ),
 };

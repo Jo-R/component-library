@@ -26,6 +26,7 @@ export const useDescendant = (descendant) => {
     registerDescendant(descendant.element);
 
     return () => unregisterDescendant(descendant.element);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     registerDescendant,
     index,
@@ -38,9 +39,7 @@ export const useDescendant = (descendant) => {
   return index;
 };
 
-export const AccordionContext = createContext();
 export const AccordionDescendantContext = createContext();
-export const AccordionItemContext = createContext();
 
 export const AccordionDescendantProvider = ({ items, set, children }) => {
   const registerDescendant = useCallback(
@@ -50,7 +49,6 @@ export const AccordionDescendantProvider = ({ items, set, children }) => {
         return;
       }
       // TODO improve more per the Reach on to get the order right always
-      // using this way of using items avoids it being a dep and the infinite loop
       set((items) => {
         let updated;
         if (items.find((item) => item === element)) {

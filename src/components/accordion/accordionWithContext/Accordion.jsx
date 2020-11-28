@@ -1,13 +1,14 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, createContext } from "react";
 import { useRef, useState, useMemo } from "react";
 import styles from "../Accordion.module.css";
 import {
-  AccordionContext,
   AccordionDescendantProvider,
-  AccordionItemContext,
   useDescendant,
-} from "./AccordionContext";
+} from "./AccordionDescendents";
+
+const AccordionContext = createContext();
+const AccordionItemContext = createContext();
 
 export const Accordion = ({ children }) => {
   const [descendants, setDescendants] = useState([]);
@@ -18,8 +19,9 @@ export const Accordion = ({ children }) => {
       accordionId: "accordion",
       currentOpenPanel,
       onSelectPanel: setCurrentOpenPanel,
+      descendants,
     }),
-    [currentOpenPanel]
+    [currentOpenPanel, descendants]
   );
   return (
     <AccordionDescendantProvider items={descendants} set={setDescendants}>
@@ -56,6 +58,7 @@ export const AccordionItem = ({ children }) => {
 
 export const AccordionButton = ({ children, ...props }) => {
   const { btnRef, index, buttonId, panelId } = useContext(AccordionItemContext);
+  const { descendants } = useContext(AccordionContext);
   const { onSelectPanel } = useContext(AccordionContext);
 
   function handleClick(event: React.MouseEvent) {
@@ -64,48 +67,36 @@ export const AccordionButton = ({ children, ...props }) => {
     onSelectPanel(index);
   }
 
-  // let handleKeyDown = (event) => {
-  //   switch (event.key) {
-  //     case "ArrowDown":
-  //       if (orientation === "vertical" || orientation === "both") {
-  //         event.preventDefault();
-  //         let next = getNextOption();
-  //         callback(key === "option" ? next : next[key]);
-  //       }
-  //       break;
-  //     case "ArrowUp":
-  //       if (orientation === "vertical" || orientation === "both") {
-  //         event.preventDefault();
-  //         let prev = getPreviousOption();
-  //         callback(key === "option" ? prev : prev[key]);
-  //       }
-  //       break;
-  //     case "PageUp":
-  //       event.preventDefault();
-  //       let prevOrFirst = (event.ctrlKey
-  //         ? getPreviousOption
-  //         : getFirstOption)();
-  //       callback(key === "option" ? prevOrFirst : prevOrFirst[key]);
-  //       break;
-  //     case "Home":
-  //       event.preventDefault();
-  //       let first = getFirstOption();
-  //       callback(key === "option" ? first : first[key]);
-  //       break;
-  //     case "PageDown":
-  //       event.preventDefault();
-  //       let nextOrLast = (event.ctrlKey ? getNextOption : getLastOption)();
-  //       callback(key === "option" ? nextOrLast : nextOrLast[key]);
-  //       break;
-  //     case "End":
-  //       event.preventDefault();
-  //       let last = getLastOption();
-  //       callback(key === "option" ? last : last[key]);
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  // };
+  const handleKeyDown = (event) => {
+    switch (event.key) {
+      case "ArrowDown":
+        event.preventDefault();
+        if (index === descendants.length - 1) {
+          descendants[0].element.focus();
+        } else {
+          descendants[index + 1].element.focus();
+        }
+        break;
+      case "ArrowUp":
+        event.preventDefault();
+        if (index === 0) {
+          descendants[descendants.length - 1].element.focus();
+        } else {
+          descendants[index - 1].element.focus();
+        }
+        break;
+      case "Home":
+        event.preventDefault();
+        descendants[0].element.focus();
+        break;
+      case "End":
+        event.preventDefault();
+        descendants[descendants.length - 1].element.focus();
+        break;
+      default:
+        return;
+    }
+  };
 
   return (
     <button
@@ -115,6 +106,7 @@ export const AccordionButton = ({ children, ...props }) => {
       id={buttonId}
       className={styles.accordionBtn}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       ref={btnRef}
       {...props}
     >
