@@ -12,60 +12,84 @@ export function useForceUpdate() {
   }, []);
 }
 
-export const useDescendent = (element) => {
-  const { registerDescendant, descendants, unregisterDescendant } = useContext(AccordionDescendantContext);
+export const useDescendant = (descendant) => {
+  const { registerDescendant, descendants, unregisterDescendant } = useContext(
+    AccordionDescendantContext
+  );
   const forceUpdate = useForceUpdate();
-  let index =  descendants.findIndex((item) => item.element === element);
-  
+  let index = descendants.findIndex(
+    (item) => item.element === descendant.element
+  );
   useEffect(() => {
-    if (!element) forceUpdate();
-    registerDescendant(element);
+    // TODO dig through why this forceUpdate is essential
+    if (!descendant.element) forceUpdate();
+    registerDescendant(descendant.element);
 
-    return () => unregisterDescendant(element);
-  }, [element, registerDescendant, index, forceUpdate, unregisterDescendant]);
-  
+    return () => unregisterDescendant(descendant.element);
+  }, [
+    registerDescendant,
+    index,
+    forceUpdate,
+    unregisterDescendant,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...Object.values(descendant),
+  ]);
+
   return index;
-}
+};
 
+export const AccordionContext = createContext();
 export const AccordionDescendantContext = createContext();
 export const AccordionItemContext = createContext();
 
-export const AccordionDescendantProvider = ({items, set, children}) => {
-
-  const registerDescendant = useCallback((element) => {
-    if (!element) {
+export const AccordionDescendantProvider = ({ items, set, children }) => {
+  const registerDescendant = useCallback(
+    (element) => {
+      console.log(element);
+      if (!element) {
         return;
-    }
-    // TODO improve more per the Reach on to get the order right always
-    // using this way of using items avoids it being a dep and the infinite loop
-    set((items) => {
-      let updated;
-      if (items.find((item) => item === element)) {
-        updated = items;
-      } else {
-        updated = [...items, element];
       }
-      return updated.map((item, index) => ({ ...item, index }));
-    });
-  }, [set]);
-  
-  const unregisterDescendant = useCallback((element) => {
-    set((items) => {
-       const updated = items.filter((item) => element !== item.element);
-       return updated.map((item, index) => ({ ...item, index }));
-    });
-  }, [set]);
+      // TODO improve more per the Reach on to get the order right always
+      // using this way of using items avoids it being a dep and the infinite loop
+      set((items) => {
+        let updated;
+        if (items.find((item) => item === element)) {
+          updated = items;
+        } else {
+          updated = [
+            ...items,
+            {
+              element,
+            },
+          ];
+        }
+        return updated.map((item, index) => ({ ...item, index }));
+      });
+    },
+    [set]
+  );
 
-  return(
-    <AccordionDescendantContext.Provider value={useMemo(() => {
+  const unregisterDescendant = useCallback(
+    (element) => {
+      set((items) => {
+        const updated = items.filter((item) => element !== item.element);
+        return updated.map((item, index) => ({ ...item, index }));
+      });
+    },
+    [set]
+  );
+
+  return (
+    <AccordionDescendantContext.Provider
+      value={useMemo(() => {
         return {
           descendants: items,
           registerDescendant,
           unregisterDescendant,
         };
-      }, [items, registerDescendant, unregisterDescendant])}>
+      }, [items, registerDescendant, unregisterDescendant])}
+    >
       {children}
     </AccordionDescendantContext.Provider>
   );
 };
-
