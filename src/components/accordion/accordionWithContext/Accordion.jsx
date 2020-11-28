@@ -10,9 +10,9 @@ import {
 const AccordionContext = createContext();
 const AccordionItemContext = createContext();
 
-export const Accordion = ({ children }) => {
+export const AccordionCtx = ({ children }) => {
   const [descendants, setDescendants] = useState([]);
-  const [currentOpenPanel, setCurrentOpenPanel] = useState(0);
+  const [currentOpenPanel, setCurrentOpenPanel] = useState();
 
   const accordionCtxValues = useMemo(
     () => ({
