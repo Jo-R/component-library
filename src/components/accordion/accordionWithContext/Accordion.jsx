@@ -115,7 +115,7 @@ export const AccordionButton = ({ children, ...props }) => {
   );
 };
 
-export const AccordionPanel = ({ children }) => {
+export const AccordionPanel = ({ children, ...props }) => {
   const { panelId, buttonId, isActive } = useContext(AccordionItemContext);
   return (
     <div
@@ -127,6 +127,7 @@ export const AccordionPanel = ({ children }) => {
           ? `${styles.accordionPanel} ${styles.hidden}`
           : styles.accordionPanel
       }
+      {...props}
     >
       {children}
     </div>

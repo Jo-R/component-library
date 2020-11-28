@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "./accordionWithContext";
+import styles from "./Accordion.module.css";
 
 export default {
   title: "Accordion",
@@ -31,6 +32,7 @@ AccordionSimple.args = {
   headingLevel: 3,
 };
 
+
 const TemplateCtx = (args) => <AccordionCtx {...args} />;
 
 export const AccordionWithContext = TemplateCtx.bind({});
@@ -41,7 +43,7 @@ AccordionWithContext.args = {
         <h3>
           <AccordionButton>You can activate me</AccordionButton>
         </h3>
-        <AccordionPanel>
+        <AccordionPanel className={styles.red}>
           Ante rhoncus facilisis iaculis nostra faucibus vehicula ac consectetur
           pretium, lacus nunc consequat id viverra facilisi ligula eleifend,
           congue gravida malesuada proin scelerisque luctus est convallis.
