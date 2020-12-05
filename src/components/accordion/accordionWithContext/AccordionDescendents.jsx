@@ -17,6 +17,8 @@ export const useDescendant = (descendant) => {
     AccordionDescendantContext
   );
   const forceUpdate = useForceUpdate();
+
+  // this returns -1 on first run so needs to run a second time to corretly return the index
   let index = descendants.findIndex(
     (item) => item.element === descendant.element
   );

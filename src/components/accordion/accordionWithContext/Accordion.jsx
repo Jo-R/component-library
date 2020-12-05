@@ -56,11 +56,11 @@ export const AccordionItem = ({ children }) => {
   );
 };
 
-export const AccordionButton = ({ children, ...props }) => {
+export const AccordionButton = ({ children, className, ...props }) => {
   const { btnRef, index, buttonId, panelId } = useContext(AccordionItemContext);
   const { descendants } = useContext(AccordionContext);
   const { onSelectPanel } = useContext(AccordionContext);
-
+  const style = `${className} ${styles.accordionBtn}`;
   function handleClick(event: React.MouseEvent) {
     event.preventDefault();
     btnRef.current.focus();
@@ -104,7 +104,7 @@ export const AccordionButton = ({ children, ...props }) => {
       aria-expanded={true}
       aria-controls={panelId}
       id={buttonId}
-      className={styles.accordionBtn}
+      className={style}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       ref={btnRef}
@@ -115,18 +115,17 @@ export const AccordionButton = ({ children, ...props }) => {
   );
 };
 
-export const AccordionPanel = ({ children, ...props }) => {
+export const AccordionPanel = ({ children, className, ...props }) => {
   const { panelId, buttonId, isActive } = useContext(AccordionItemContext);
+  const style = !isActive
+    ? `${styles.accordionPanel} ${styles.hidden} ${className}`
+    : `${styles.accordionPanel} ${className}`;
   return (
     <div
       id={panelId}
       role="region"
       aria-labelledby={buttonId}
-      className={
-        !isActive
-          ? `${styles.accordionPanel} ${styles.hidden}`
-          : styles.accordionPanel
-      }
+      className={style}
       {...props}
     >
       {children}
