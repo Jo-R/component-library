@@ -5,6 +5,7 @@ import styles from "../Accordion.module.css";
 import {
   AccordionDescendantProvider,
   useDescendant,
+  AccordionDescendantContext,
 } from "./AccordionDescendents";
 
 const AccordionContext = createContext();
@@ -19,9 +20,8 @@ export const AccordionCtx = ({ children }) => {
       accordionId: "accordion",
       currentOpenPanel,
       onSelectPanel: setCurrentOpenPanel,
-      descendants,
     }),
-    [currentOpenPanel, descendants]
+    [currentOpenPanel]
   );
   return (
     <AccordionDescendantProvider items={descendants} set={setDescendants}>
@@ -58,7 +58,7 @@ export const AccordionItem = ({ children }) => {
 
 export const AccordionButton = ({ children, className, ...props }) => {
   const { btnRef, index, buttonId, panelId } = useContext(AccordionItemContext);
-  const { descendants } = useContext(AccordionContext);
+  const { descendants } = useContext(AccordionDescendantContext);
   const { onSelectPanel } = useContext(AccordionContext);
   const style = `${className} ${styles.accordionBtn}`;
   function handleClick(event: React.MouseEvent) {
