@@ -11,11 +11,13 @@ const Template = (args) => <Alert {...args} />;
 export const AlertSucess = Template.bind({});
 AlertSucess.args = {
   message: "Something good happened",
-  isSuccess: true
+  isSuccess: true,
+  onClose: () => alert("close")
 }
 
 export const AlertWarn = Template.bind({});
 AlertWarn.args = {
   message: "Something not so good happened",
-  isSuccess: false
+  isSuccess: false,
+  onClose: () => alert("close")
 }
