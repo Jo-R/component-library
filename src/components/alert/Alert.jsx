@@ -8,12 +8,17 @@ import { animated } from "react-spring";
 export const Alert = ({ message, isSuccess, onClose }) => {
   const [style, trigger] = useBoop({ y: 2 });
 
+  // using the icon context as a reminder that it's there!
   return (
     <IconContext.Provider value={{ size: "2rem" }}>
       <div role="alert" className={styles.wrapper} onMouseEnter={trigger}>
-        <animated.span style={style} onClick={onClose}>
+        <animated.button
+          style={style}
+          onClick={onClose}
+          className={styles.button}
+        >
           <FaTimes size={"1rem"} color={"lightslategray"} />
-        </animated.span>
+        </animated.button>
         <div className={styles.content}>
           {isSuccess ? (
             <FaCheckSquare color={"green"} />
