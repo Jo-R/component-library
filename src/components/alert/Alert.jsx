@@ -16,6 +16,7 @@ export const Alert = ({ message, isSuccess, onClose }) => {
           style={style}
           onClick={onClose}
           className={styles.button}
+          aria-label="close"
         >
           <FaTimes size={"1rem"} color={"lightslategray"} />
         </animated.button>

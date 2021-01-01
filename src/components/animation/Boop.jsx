@@ -32,8 +32,8 @@ export function useBoop({
   const [isBooped, setIsBooped] = React.useState(false);
 
   const style = useSpring({
-    display: "inline-block",
-    backfaceVisibility: "hidden",
+    display: "inline-block", // can apply this to inline children now and have animation
+    backfaceVisibility: "hidden", // for gpu/hardware acceleration
     transform: isBooped
       ? `translate(${x}px, ${y}px)
          rotate(${rotation}deg)
