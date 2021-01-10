@@ -1,0 +1,18 @@
+.navList {
+  list-style: none;
+}
+
+.navList li {
+  display: inline;
+  margin-right: 0.2rem;
+}
+
+.navList li:not(:first-child):before {
+  content: ">";
+  padding: 0.5rem;
+}
+
+.navList li [aria-current="page"] {
+  font-weight: bold;
+  color: maroon;
+}
