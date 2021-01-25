@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Breadcrumb.module.css";
 
+// TODO prop types for links
 export const Breadcrumb = ({ links }) => {
   return (
     <nav aria-label="breadcrumb">

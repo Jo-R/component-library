@@ -1,0 +1,9 @@
+button {
+  background-color: pink;
+  padding: 1rem;
+}
+
+/** Clearly not great to have the staus indicated only by colour because of colour blindness!*/
+.pressed {
+  background-color: palegreen;
+}
