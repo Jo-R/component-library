@@ -3,8 +3,6 @@ import styles from "./ToggleButton.module.css";
 
 /**
  * For this toggle button, the text changes when toggled so aria-pressed is not needed.
- * It doesn't announce the label change but screen reader users would navigate differently
- * TODO get an understanding of this using nvda - eg using the B key to read out all buttons
  */
 export const ToggleButton = ({
   pressedLabel,
@@ -23,7 +21,7 @@ export const ToggleButton = ({
     <button
       ref={btnRef}
       onClick={handleOnClick}
-      className={isPressed ? styles.pressed : undefined}
+      className={isPressed ? styles.pressed : styles.initial}
     >
       {isPressed ? pressedLabel : notPressedLabel}
     </button>
