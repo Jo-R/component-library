@@ -1,7 +1,62 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border: 5px solid gray;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .item {
+  padding: 2rem;
+  width: 90%;
+  background-color: honeydew;
+  z-index: -1;
+}
+
+.hidden {
   display: none;
 }
 
 .active {
   display: block;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(90%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.forward {
+  animation: slideIn 0.5s ease-in;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(-90%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.backward {
+  animation: slideOut 0.5s ease-in;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scrollBtn {
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  background-color: lightskyblue;
+  border: none;
 }
