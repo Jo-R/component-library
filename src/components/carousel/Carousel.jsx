@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Carousel.module.css";
 
 // TODO
 // ref: https://web.dev/carousel-best-practices/
 // and https://www.w3.org/TR/wai-aria-practices-1.2/#carousel
 
-// have it scroll automatically (must be able to stop it and screen reader should be apt)
 // slide picker control (ie the little dots to pick a slide)
+// ? make it swipeable?
 
-export const Carousel = ({ items }) => {
+export const Carousel = ({ items, transitionTime = 2000 }) => {
   const [activeItem, setActiveItem] = useState(0);
   const [direction, setDirection] = useState("forward");
+  const [autoScroll, setAutoScroll] = useState(transitionTime > 0);
 
-  const handleNext = () => {
-    if (activeItem < items.length - 1) {
-      setActiveItem(activeItem + 1);
-    } else {
-      setActiveItem(0);
-    }
+  const handleNext = useCallback(() => {
+    setActiveItem((i) => {
+      const next = i + 1;
+      if (next < items.length) {
+        return next;
+      } else {
+        return 0;
+      }
+    });
     setDirection("forward");
-  };
+  }, [items]);
+
+  useEffect(() => {
+    let timer;
+    if (autoScroll) {
+      timer = setInterval(handleNext, transitionTime);
+    }
+    return () => clearInterval(timer);
+  }, [autoScroll, handleNext, transitionTime]);
 
   const handlePrev = () => {
     if (activeItem > 0) {
@@ -45,7 +57,9 @@ export const Carousel = ({ items }) => {
   return (
     <div className={styles.wrapper}>
       {items.map((el, i) => (
-        <div className={getClassNameForItem(activeItem === i)}>{el}</div>
+        <div className={getClassNameForItem(activeItem === i)} key={i}>
+          {el}
+        </div>
       ))}
       <div className={styles.btnWrapper}>
         <button className={styles.scrollBtn} onClick={handlePrev}>
@@ -53,6 +67,12 @@ export const Carousel = ({ items }) => {
         </button>
         <button className={styles.scrollBtn} onClick={handleNext}>
           Next
+        </button>
+        <button
+          className={styles.scrollBtn}
+          onClick={() => setAutoScroll(!autoScroll)}
+        >
+          Toggle auto scroll
         </button>
       </div>
     </div>

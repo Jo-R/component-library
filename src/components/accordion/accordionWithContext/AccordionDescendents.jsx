@@ -46,7 +46,6 @@ export const AccordionDescendantContext = createContext();
 export const AccordionDescendantProvider = ({ items, set, children }) => {
   const registerDescendant = useCallback(
     (element) => {
-      console.log(element);
       if (!element) {
         return;
       }
