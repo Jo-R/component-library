@@ -8,7 +8,7 @@ import styles from "./Carousel.module.css";
 // slide picker control (ie the little dots to pick a slide)
 // ? make it swipeable?
 
-export const Carousel = ({ items, transitionTime = 2000 }) => {
+export const Carousel = ({ items, transitionTime = 5000 }) => {
   const [activeItem, setActiveItem] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [autoScroll, setAutoScroll] = useState(transitionTime > 0);
@@ -47,25 +47,36 @@ export const Carousel = ({ items, transitionTime = 2000 }) => {
       return `${styles.item} ${styles.hidden}`;
     } else {
       if (direction === "forward") {
-        return `${styles.item} ${styles.active} ${styles.forward}`;
+        return `${styles.item} ${styles.active} ${styles.forwardIn}`;
       } else {
-        return `${styles.item} ${styles.active} ${styles.backward}`;
+        return `${styles.item} ${styles.active} ${styles.backwardIn}`;
       }
     }
   };
 
   return (
     <div className={styles.wrapper}>
-      {items.map((el, i) => (
-        <div className={getClassNameForItem(activeItem === i)} key={i}>
-          {el}
-        </div>
-      ))}
+      <div className={styles.itemsWrapper}>
+        {items.map((el, i) => (
+          <div className={getClassNameForItem(activeItem === i)} key={i}>
+            {el}
+          </div>
+        ))}
+      </div>
+
       <div className={styles.btnWrapper}>
-        <button className={styles.scrollBtn} onClick={handlePrev}>
+        <button
+          className={styles.scrollBtn}
+          onClick={handlePrev}
+          disabled={autoScroll}
+        >
           Prev
         </button>
-        <button className={styles.scrollBtn} onClick={handleNext}>
+        <button
+          className={styles.scrollBtn}
+          onClick={handleNext}
+          disabled={autoScroll}
+        >
           Next
         </button>
         <button

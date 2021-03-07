@@ -3,14 +3,20 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  border: 5px solid gray;
+  border: 2px solid gray;
   border-radius: 8px;
+}
+
+.itemsWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   overflow: hidden;
 }
 
 .item {
   padding: 2rem;
-  width: 90%;
+  flex: 0 0 95%;
   background-color: honeydew;
   z-index: -1;
 }
@@ -23,7 +29,7 @@
   display: block;
 }
 
-@keyframes slideIn {
+@keyframes slideInFwd {
   0% {
     transform: translateX(90%);
   }
@@ -32,11 +38,11 @@
   }
 }
 
-.forward {
-  animation: slideIn 0.5s ease-in;
+.forwardIn {
+  animation: slideInFwd 0.5s ease-in;
 }
 
-@keyframes slideOut {
+@keyframes slideInBwd {
   0% {
     transform: translateX(-90%);
   }
@@ -45,8 +51,8 @@
   }
 }
 
-.backward {
-  animation: slideOut 0.5s ease-in;
+.backwardIn {
+  animation: slideInBwd 0.5s ease-in;
 }
 
 .btnWrapper {
