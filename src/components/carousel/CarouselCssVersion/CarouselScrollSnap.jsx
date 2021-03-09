@@ -2,9 +2,12 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import styles from "./CarouselCss.module.css";
 
 /**
- * A CSS version of a carousel based on https://css-tricks.com/a-super-flexible-css-carousel-enhanced-with-javascript-navigation/
+ * A scroll-snap version of a carousel based on https://css-tricks.com/a-super-flexible-css-carousel-enhanced-with-javascript-navigation/
+ *
+ * There's this one as well https://css-tricks.com/css-only-carousel/ which
+ * has an auto play feature...and uses no js
  */
-export const CarouselCss = ({ children }) => {
+export const CarouselScrollSnap = ({ children }) => {
   const ref = useRef();
   const {
     hasItemsOnLeft,

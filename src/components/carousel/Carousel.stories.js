@@ -1,6 +1,6 @@
 import React from "react";
 import { Carousel } from "./Carousel";
-import { CarouselCss } from "./CarouselCssVersion/CarouselCss";
+import { CarouselScrollSnap } from "./CarouselCssVersion/CarouselCss";
 import styles from "./CarouselCssVersion/CarouselCss.module.css";
 
 export default {
@@ -16,10 +16,10 @@ CarouselStory.args = {
   items: dummyItems,
 };
 
-const CarouselCssTemplate = (args) => <CarouselCss {...args} />;
+const CarouselScrollSnapTemplate = (args) => <CarouselScrollSnap {...args} />;
 
-export const CarouselCssStory = CarouselCssTemplate.bind({});
-CarouselCssStory.args = {
+export const CarouselScrollSnapStory = CarouselScrollSnapTemplate.bind({});
+CarouselScrollSnapStory.args = {
   children: (
     <>
       <div className={styles.item}>Item 1</div>
