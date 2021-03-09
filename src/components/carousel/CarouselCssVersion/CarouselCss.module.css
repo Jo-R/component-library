@@ -1,0 +1,30 @@
+.item {
+  padding: 2rem;
+  background-color: honeydew;
+  border: 1px solid red;
+  flex: 0 0 auto;
+}
+
+.outerWrapper {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid blueviolet;
+}
+
+.innerWrapper {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin-left: -1rem;
+  border: 1px solid green;
+}
+
+.innerWrapper::-webkit-scrollbar {
+  display: none;
+}
+.innerWrapper > * {
+  scroll-snap-align: center;
+  margin-left: 1rem;
+}
