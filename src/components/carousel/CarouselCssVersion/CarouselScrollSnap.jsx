@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import styles from "./CarouselCss.module.css";
+import styles from "./CarouselScrollSnap.module.css";
 
 /**
  * A scroll-snap version of a carousel based on https://css-tricks.com/a-super-flexible-css-carousel-enhanced-with-javascript-navigation/

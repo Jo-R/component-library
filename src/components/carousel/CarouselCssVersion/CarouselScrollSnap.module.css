@@ -9,6 +9,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid blueviolet;
+  width: 50%;
 }
 
 .innerWrapper {

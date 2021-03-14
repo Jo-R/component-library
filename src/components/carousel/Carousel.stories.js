@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel } from "./Carousel";
-import { CarouselScrollSnap } from "./CarouselCssVersion/CarouselCss";
-import styles from "./CarouselCssVersion/CarouselCss.module.css";
+import { CarouselScrollSnap } from "./CarouselCssVersion/CarouselScrollSnap";
+import styles from "./CarouselCssVersion/CarouselScrollSnap.module.css";
 
 export default {
   title: "Carousel",
