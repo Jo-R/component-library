@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styles from "./CarouselScrollSnap.module.css";
+import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 
 /**
  * A scroll-snap version of a carousel based on https://css-tricks.com/a-super-flexible-css-carousel-enhanced-with-javascript-navigation/
@@ -17,19 +18,29 @@ export const CarouselScrollSnap = ({ children }) => {
   } = usePosition(ref);
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.outerWrapper}>
         <div className={styles.innerWrapper} ref={ref}>
           {children}
         </div>
       </div>
-      <button disabled={!hasItemsOnLeft} onClick={scrollLeft}>
-        Left
-      </button>
-      <button disabled={!hasItemsOnRight} onClick={scrollRight}>
-        Right
-      </button>
-    </>
+      <div className={styles.btnWrapper}>
+        <button
+          disabled={!hasItemsOnLeft}
+          onClick={scrollLeft}
+          className={styles.scrollBtn}
+        >
+          <FaChevronCircleLeft className={styles.btnIcon} />
+        </button>
+        <button
+          disabled={!hasItemsOnRight}
+          onClick={scrollRight}
+          className={styles.scrollBtn}
+        >
+          <FaChevronCircleRight className={styles.btnIcon} />
+        </button>
+      </div>
+    </div>
   );
 };
 

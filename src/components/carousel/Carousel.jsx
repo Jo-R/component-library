@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Carousel.module.css";
+import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 
 // TODO
 // ref: https://web.dev/carousel-best-practices/
@@ -8,7 +9,7 @@ import styles from "./Carousel.module.css";
 // slide picker control (ie the little dots to pick a slide)
 // ? make it swipeable?
 
-export const Carousel = ({ items, transitionTime = 5000 }) => {
+export const Carousel = ({ items, transitionTime = 2000 }) => {
   const [activeItem, setActiveItem] = useState(0);
   const [direction, setDirection] = useState("forward");
   const [autoScroll, setAutoScroll] = useState(transitionTime > 0);
@@ -70,20 +71,20 @@ export const Carousel = ({ items, transitionTime = 5000 }) => {
           onClick={handlePrev}
           disabled={autoScroll}
         >
-          Prev
+          <FaChevronCircleLeft className={styles.btnIcon} />
         </button>
         <button
           className={styles.scrollBtn}
           onClick={handleNext}
           disabled={autoScroll}
         >
-          Next
+          <FaChevronCircleRight className={styles.btnIcon} />
         </button>
         <button
-          className={styles.scrollBtn}
+          className={styles.playBtn}
           onClick={() => setAutoScroll(!autoScroll)}
         >
-          Toggle auto scroll
+          {autoScroll ? "Stop autoplay" : "Autoplay"}
         </button>
       </div>
     </div>

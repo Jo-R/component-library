@@ -1,15 +1,12 @@
 .item {
   padding: 2rem;
   background-color: honeydew;
-  border: 1px solid red;
   flex: 0 0 auto;
 }
 
 .outerWrapper {
   position: relative;
   overflow: hidden;
-  border: 1px solid blueviolet;
-  width: 50%;
 }
 
 .innerWrapper {
@@ -19,7 +16,6 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   margin-left: -1rem;
-  border: 1px solid green;
 }
 
 .innerWrapper::-webkit-scrollbar {
@@ -28,4 +24,24 @@
 .innerWrapper > * {
   scroll-snap-align: center;
   margin-left: 1rem;
+}
+
+.btnWrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scrollBtn {
+  border: none;
+  background-color: white;
+}
+
+.scrollBtn:disabled .btnIcon {
+  fill: grey;
+}
+
+.btnIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: blueviolet;
 }

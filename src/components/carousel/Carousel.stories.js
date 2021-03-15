@@ -19,6 +19,9 @@ CarouselStory.args = {
 const CarouselScrollSnapTemplate = (args) => <CarouselScrollSnap {...args} />;
 
 export const CarouselScrollSnapStory = CarouselScrollSnapTemplate.bind({});
+CarouselScrollSnapStory.decorators = [
+  (story) => <div style={{ width: "50%" }}>{story()}</div>,
+];
 CarouselScrollSnapStory.args = {
   children: (
     <>
