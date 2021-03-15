@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./ToggleButton.module.css";
 
 /**
@@ -10,7 +10,6 @@ export const ToggleButton = ({
   onClickHandler = () => {},
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-  const btnRef = useRef();
 
   const handleOnClick = () => {
     setIsPressed(!isPressed);
@@ -19,7 +18,6 @@ export const ToggleButton = ({
 
   return (
     <button
-      ref={btnRef}
       onClick={handleOnClick}
       className={isPressed ? styles.pressed : styles.initial}
     >
