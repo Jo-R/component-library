@@ -18,7 +18,11 @@ export const CarouselScrollSnap = ({ children }) => {
   } = usePosition(ref);
 
   return (
-    <div className={styles.container}>
+    <section
+      className={styles.container}
+      aria-roledescription="carousel"
+      aria-label="things to be shown"
+    >
       <div className={styles.outerWrapper}>
         <div className={styles.innerWrapper} ref={ref}>
           {children}
@@ -29,6 +33,7 @@ export const CarouselScrollSnap = ({ children }) => {
           disabled={!hasItemsOnLeft}
           onClick={scrollLeft}
           className={styles.scrollBtn}
+          aria-label={"scroll left"}
         >
           <FaChevronCircleLeft className={styles.btnIcon} />
         </button>
@@ -36,11 +41,12 @@ export const CarouselScrollSnap = ({ children }) => {
           disabled={!hasItemsOnRight}
           onClick={scrollRight}
           className={styles.scrollBtn}
+          aria-label={"scroll right"}
         >
           <FaChevronCircleRight className={styles.btnIcon} />
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

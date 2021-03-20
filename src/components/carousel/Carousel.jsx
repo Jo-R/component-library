@@ -56,10 +56,21 @@ export const Carousel = ({ items, transitionTime = 2000 }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <section
+      className={styles.wrapper}
+      aria-roledescription="carousel"
+      aria-label="things to be shown"
+      aria-atomic="false"
+      aria-live={autoScroll ? "off" : "polite"}
+    >
       <div className={styles.itemsWrapper}>
         {items.map((el, i) => (
-          <div className={getClassNameForItem(activeItem === i)} key={i}>
+          <div
+            className={getClassNameForItem(activeItem === i)}
+            key={i}
+            role="group"
+            aria-roledescription="slide"
+          >
             {el}
           </div>
         ))}
@@ -67,9 +78,16 @@ export const Carousel = ({ items, transitionTime = 2000 }) => {
 
       <div className={styles.btnWrapper}>
         <button
+          className={styles.playBtn}
+          onClick={() => setAutoScroll(!autoScroll)}
+        >
+          {autoScroll ? "Stop autoplay" : "Autoplay"}
+        </button>
+        <button
           className={styles.scrollBtn}
           onClick={handlePrev}
           disabled={autoScroll}
+          aria-label={"scroll left"}
         >
           <FaChevronCircleLeft className={styles.btnIcon} />
         </button>
@@ -77,16 +95,11 @@ export const Carousel = ({ items, transitionTime = 2000 }) => {
           className={styles.scrollBtn}
           onClick={handleNext}
           disabled={autoScroll}
+          aria-label={"scroll right"}
         >
           <FaChevronCircleRight className={styles.btnIcon} />
         </button>
-        <button
-          className={styles.playBtn}
-          onClick={() => setAutoScroll(!autoScroll)}
-        >
-          {autoScroll ? "Stop autoplay" : "Autoplay"}
-        </button>
       </div>
-    </div>
+    </section>
   );
 };
