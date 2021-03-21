@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styles from "./Carousel.module.css";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
-
-// TODO
-// ref: https://web.dev/carousel-best-practices/
-// and https://www.w3.org/TR/wai-aria-practices-1.2/#carousel
-
-// slide picker control (ie the little dots to pick a slide)
-// ? make it swipeable?
+import { usePrefersReducedMotion } from "../animation/usePrefersReducedMotion";
 
 export const Carousel = ({ items, transitionTime = 2000 }) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [activeItem, setActiveItem] = useState(0);
   const [direction, setDirection] = useState("forward");
-  const [autoScroll, setAutoScroll] = useState(transitionTime > 0);
+  const [autoScroll, setAutoScroll] = useState(
+    transitionTime > 0 && !prefersReducedMotion
+  );
 
   const handleNext = useCallback(() => {
     setActiveItem((i) => {
